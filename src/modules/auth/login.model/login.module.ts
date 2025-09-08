@@ -7,6 +7,9 @@ import {
   Register,
   RegisterSchema,
 } from '../../auth/register.model/register.schema';
+import { EmailService } from 'src/services/email.service';
+// import { Otp } from '../otp.schema';
+import { OtpModule } from '../../auth/otp.module';
 
 @Module({
   imports: [
@@ -15,10 +18,11 @@ import {
     ]),
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'secretKey',
-      signOptions: { expiresIn: '7d' },
+      signOptions: { expiresIn: '30d' },
     }),
+    OtpModule,
   ],
-  providers: [LoginService],
+  providers: [LoginService, EmailService],
   controllers: [LoginController],
 })
 export class LoginModule {}
